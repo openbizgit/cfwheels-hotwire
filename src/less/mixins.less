@@ -1,0 +1,5 @@
+// Having your own mixins is great for things you have to do a lot and want to shorten it up
+
+.gray(@percent) {
+  color: lighten(@black, percentage(@percent / 100));
+}

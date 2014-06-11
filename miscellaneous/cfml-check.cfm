@@ -1,0 +1,1 @@
+<cfoutput>{cfml:"ok"}</cfoutput>

@@ -1,0 +1,33 @@
+# If you have any other rules for new cfwheels projects that would be beneficial
+# please consider adding them to the official CFWheels git ignore on github
+# https://github.com/github/gitignore/blob/master/CFWheels.gitignore
+
+# CFEclipse specific
+.project
+
+# Railo
+WEB-INF
+		
+# AssetBundler plugin: generated bundles
+javascripts/bundles
+stylesheets/bundles
+
+# bucket directory where uploads go
+s3-bucket
+temp
+
+# DBMigrate plugin: generated SQL
+db/sql
+
+# AssetBundler plugin: generated bundles
+javascripts/bundles
+stylesheets/bundles
+
+# temporary & test files
+temp/*
+
+# Mac
+.DS_Store
+
+# other crap
+.settings
