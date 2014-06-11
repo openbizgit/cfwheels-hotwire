@@ -1,4 +1,4 @@
-<cfcomponent extends="hotwire.controllers.controller">
+<cfcomponent extends="base.controllers.controller">
 	
 	<cffunction name="init">
 		<cfset filters("everyRequest")>
