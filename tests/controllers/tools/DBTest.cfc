@@ -18,7 +18,7 @@ component extends="Tests.TestBase" {
          super.teardown()
     }
 
-    public void function xxxxx() 
+    public void function test_ping_should_succeed() 
     {
         loc.args.action = "ping"
         loc.response = getResponse(argumentCollection=loc.args)
