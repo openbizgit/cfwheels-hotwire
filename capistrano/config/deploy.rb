@@ -5,7 +5,7 @@ set :application, 'hotwire'
 set :repo_url, 'git@github.com:my_username/my_repo.git'
 set :branch, "master"
 set :deploy_to, '/var/www/app'
-set :keep_releases, 3
+set :keep_releases, 5
 
 namespace :deploy do
 
