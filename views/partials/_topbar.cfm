@@ -39,7 +39,7 @@
 							<cfelseif Len(currentPerson.rootid) gt 0>
 								
 							</cfif>
-							<li>#linkTo(route="signout", text="Log out", params="clear=true")#</li>
+							<li>#linkTo(route="signout", text="Sign out", params="clear=true")#</li>
 						</ul>
 					</li>
 	        	</ul>
