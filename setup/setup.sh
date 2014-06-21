@@ -6,8 +6,9 @@
 # - This script will produce a working version of Tomcat7, Railo with Nginx web server. 
 # - The web root will be setup for deployment via Capistrano using the "deploy" user
 # - CFWheels rewrite rules have been enabled
-# - SSH keys for accepting connections from Jenkins and for accessing Valet Service Github repos have been created
+# - SSH keys for accepting connections from Jenkins and for accessing your Github repos must be created
 #
+# NOTE: Before running this script, change the username (currently ubuntu) to your username
 # NOTE: The Railo administrator is not secured, and there are no datasources set.
 #
 # MANUAL STEPS REQUIRED
@@ -33,6 +34,8 @@ sudo apt-get install git -y
 
 # install rvm, ruby and gems for rspec/capistrano
 curl -sSL https://get.rvm.io | bash -s stable
+#
+source /home/ubuntu/.rvm/scripts/rvm
 rvm requirements
 rvm install 2.1.2
 rvm use 2.1.2 --default
