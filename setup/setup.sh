@@ -45,7 +45,7 @@ gem install selenium-webdriver
 gem install pry
 
 # get the hotwire tarball from github ready for extraction to the webroot
-sudo curl -L -o /tmp/hotwire.tar.gz https://api.github.com/repos/chapmandu/cfwheels-hotwire/tarball
+sudo curl -L -o /tmp/cfwheels-hotwire.tar.gz https://api.github.com/repos/chapmandu/cfwheels-hotwire/tarball
 cd /tmp/
 sudo tar -zxvf /tmp/cfwheels-hotwire.tar.gz
 # rename the folder to something predictable
