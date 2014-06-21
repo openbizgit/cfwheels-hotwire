@@ -26,29 +26,10 @@ RAILO_VERSION="4.2.1.000"
 WEB_ROOT="/var/www/app"
 
 # install packages
-sudo apt-get install curl -y
 sudo apt-get install nginx -y
 sudo apt-get install tomcat7 -y
 sudo apt-get install curl -y
 sudo apt-get install git -y
-
-# install rvm, ruby and gems for rspec/capistrano
-# i'm having permission denies issues here... just install ruby with apt-get for now
-# curl -sSL https://get.rvm.io | bash -s stable
-# source /home/$USER/.rvm/scripts/rvm
-# sudo usermod -a -G rvm $USER
-# rvm requirements
-# rvm install 2.1.2
-# rvm use 2.1.2 --default
-
-# install rvm, ruby and gems for rspec/capistrano (will install ruby 1.9.3)
-sudo apt-get install ruby -y
-ruby -v
-gem install capybara
-gem install capybara-webkit
-gem install rspec
-gem install selenium-webdriver
-gem install pry
 
 # get the hotwire tarball from github ready for extraction to the webroot
 sudo curl -L -o /tmp/cfwheels-hotwire.tar.gz https://api.github.com/repos/chapmandu/cfwheels-hotwire/tarball
