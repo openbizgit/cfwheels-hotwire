@@ -33,14 +33,17 @@ sudo apt-get install curl -y
 sudo apt-get install git -y
 
 # install rvm, ruby and gems for rspec/capistrano
-curl -sSL https://get.rvm.io | bash -s stable
-#
-source /home/ubuntu/.rvm/scripts/rvm
-rvm requirements
-rvm install 2.1.2
-rvm use 2.1.2 --default
-ruby -v
+# i'm having permission denies issues here... just install ruby with apt-get for now
+# curl -sSL https://get.rvm.io | bash -s stable
+# source /home/$USER/.rvm/scripts/rvm
+# sudo usermod -a -G rvm $USER
+# rvm requirements
+# rvm install 2.1.2
+# rvm use 2.1.2 --default
 
+# install rvm, ruby and gems for rspec/capistrano (will install ruby 1.9.3)
+sudo apt-get install ruby -y
+ruby -v
 gem install capybara
 gem install capybara-webkit
 gem install rspec
@@ -57,7 +60,7 @@ sudo mv chapmandu-cfwheels-hotwire-*/ hotwire/
 
 # TODO: maybe change this to call an 'update-railo.sh' script
 # download railo & unpack jars
-wget -O /tmp/railo-$RAILO_VERSION-jars.tar.gz http://www.getrailo.org/down.cfm?item=/railo/remote/download/$RAILO_VERSION/custom/all/railo-$RAILO_VERSION-jars.tar.gz
+wget -O /tmp/railo-$RAILO_VERSION-jars.tar.gz http://www.getrailo.org/down.cfm?item=/railo/remote/download42/$RAILO_VERSION/custom/all/railo-$RAILO_VERSION-jars.tar.gz
 cd /tmp
 tar -zxvf /tmp/railo-$RAILO_VERSION-jars.tar.gz 
 
