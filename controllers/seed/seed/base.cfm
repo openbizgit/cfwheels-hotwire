@@ -9,6 +9,9 @@
 	,passwordConfirmation=standardPassword
 	,utcoffset=0
 	,confirmedat=Now()
+	,resettoken="foo"
+	,tokencreatedat=Now()
+	,tokenexpiresat=DateAdd("d", 1, Now())
 )>
 <cfset $$validObjectCheck("Adam", rootPerson)>
 
