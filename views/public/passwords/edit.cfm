@@ -4,7 +4,7 @@
 
 
   <div class="container">
-   	#startFormTag(route="publicSigninSavePassword", params="token=#params.token#", class="form-signin", style="max-width: 550px;")#
+   	#startFormTag(route="publicPasswordsUpdate", params="token=#params.token#", class="form-signin", style="max-width: 550px;")#
       <div style="text-align:center;"><a href="/"><img src="/images/logo.png" width="100" /></a></div>
       #flashMessageTag()#
       #errorMessageTag()#

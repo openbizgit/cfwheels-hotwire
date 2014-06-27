@@ -14,6 +14,12 @@
 		<cfset $$hasTests("model", skip)>
 	</cffunction>
 
+	<!--- see if all controllers have a corresponding view (*_spec.rb) test file --->
+	<cffunction name="test_capybara_integration_tests_exist">
+		<cfset var skip = "">
+		<cfset $$hasTests("view", skip)>
+	</cffunction>
+
 	<!--- just for DRYness --->
 	<cffunction name="$$hasTests" access="private">
 		<cfargument name="type" type="string" required="true">
@@ -24,6 +30,8 @@
 			<cfcase value="controller">
 				<cfset loc.mvcFolder = ExpandPath("controllers/")>
 				<cfset loc.testsFolder = ExpandPath("tests/controllers/")>
+				<cfset loc.testsFilter = "*.cfc">
+				<cfset loc.testsSuffix = "Test.cfc">
 				<!--- core files must be skipped --->
 				<!--- you can skip namespaced files by using "admin/SomeController.cfc" --->
 				<cfset loc.skip = "tools/Junify.cfc,seed/Seed.cfc">
@@ -31,7 +39,17 @@
 			<cfcase value="model">
 				<cfset loc.mvcFolder = ExpandPath("models/")>
 				<cfset loc.testsFolder = ExpandPath("tests/models/")>
+				<cfset loc.testsFilter = "*.cfc">
+				<cfset loc.testsSuffix = "Test.cfc">
 				<cfset loc.skip = "Error.cfc,DBMigrateVersion.cfc">
+			</cfcase>
+			<cfcase value="view">
+				<!--- check that every controller has a corresponding *_spec.rb file --->
+				<cfset loc.mvcFolder = ExpandPath("controllers/")>
+				<cfset loc.testsFolder = ExpandPath("tests/views/")>
+				<cfset loc.testsFilter = "*.rb">
+				<cfset loc.testsSuffix = "_spec.rb">
+				<cfset loc.skip = "tools/Junify.cfc,seed/Seed.cfc">
 			</cfcase>
 		</cfswitch>
 
@@ -42,11 +60,10 @@
 		
 		<!--- get the models and tests --->
 		<cfdirectory action="list" directory="#loc.mvcFolder#" filter="*.cfc" recurse="true" name="mvc">
-		<cfdirectory action="list" directory="#loc.testsFolder#" filter="*.cfc" recurse="true" name="tests">
+		<cfdirectory action="list" directory="#loc.testsFolder#" filter="#loc.testsFilter#" recurse="true" name="tests">
 		<!--- assert there are some tests --->
 		<cfset assert("tests.recordCount gt 0", "loc.testsFolder")>
 		<!--- check if there is corresponding test file --->
-
 		<cfloop query="mvc">
 			<cfset loc.mvcFolder = Replace(loc.mvcFolder, "\", "/", "all")>
 			<cfset loc.directory = Replace(mvc.directory, "\", "/", "all")>
@@ -60,8 +77,12 @@
 				AND Compare(mvc.name, "Model.cfc") neq 0
 			>
 				<cfset loc.mvcFilePath = loc.directory & "/" & mvc.name>
-				<cfset loc.testFileName = ListFirst(mvc.name, ".") & "Test.cfc">
-				<cfset loc.testFilePath = loc.testsFolder & $$folder(loc.mvcFolder, loc.directory & "/") & ListFirst(mvc.name, ".") & "Test.cfc">
+				<cfif arguments.type eq "view">
+					<cfset loc.testFileName = LCase(ListFirst(mvc.name, ".") & loc.testsSuffix)>
+				<cfelse>
+					<cfset loc.testFileName = ListFirst(mvc.name, ".") & loc.testsSuffix>
+				</cfif>
+				<cfset loc.testFilePath = loc.testsFolder & $$folder(loc.mvcFolder, loc.directory & "/") & loc.testFileName>
 				<cfset assert("FileExists(loc.testFilePath)", "loc.mvcFilePath", "loc.testFilePath", "loc.skipKey")>
 			</cfif>
 		</cfloop>

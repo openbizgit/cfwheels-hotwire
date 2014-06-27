@@ -1,0 +1,1 @@
+Dir["views/**/*_spec.rb"].each {|f| require_relative f}

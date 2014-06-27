@@ -24,7 +24,7 @@
 	#flashMessageTag()#
 	#errorMessageTag()#
     <div class="container">
-      	#startFormTag(route="publicSigninSignin", class="form-signin", style="max-width: 400px;")#
+      	#startFormTag(route="publicSessionsCreate", class="form-signin", style="max-width: 400px;")#
 		<div style="text-align:center;"><a href="/"><img src="/images/logo.png" width="100" /></a></div>
 		    <h3 class="form-signin-heading">#get("appName")# Sign in</h3>
 		    <input type="text" class="form-control" placeholder="Email address" value="#getParam("email")#" autofocus name="email">
@@ -36,7 +36,7 @@
 				<input id="_dt" name="dt" placeholder="Empty" type="text" value="" />
 			</div>					    
 		    <button class="btn btn-lg btn-primary btn-block" type="submit", id="submit">Sign in</button>
-		    #linkTo(route="publicSigninReset", text="Forgotten?", class="btn")# <br><br>
+		    #linkTo(route="publicPasswordsNew", text="Forgotten?", class="btn")# <br><br>
       	#endFormTag()#
 
       	<cfif get("stage") eq "development" && IsDefined("people")>

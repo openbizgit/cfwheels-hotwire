@@ -9,7 +9,7 @@
 <cfset set(fromEmailAddress="#get("appName")# <no-reply@#get("domain")#>")>
 <cfset set(errorEmailAddress="developers@#get("domain")#")>
 <cfset set(errorEmailSubject="#get("appName")# error occured")>
-<cfset set(defaultEmailLayout="/layouts/externalemail")>
+<cfset set(defaultEmailLayout="/mailers/layouts/public")>
 <cfset set(sendEmailOnError=false)>
 <cfset set(useExpandedColumnAliases=false)>
 

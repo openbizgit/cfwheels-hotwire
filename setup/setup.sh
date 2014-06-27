@@ -19,7 +19,7 @@
 #
 # add this to /etc/sudoers file by running "sudo visudo".. NOTE!! Make sure the "%deploy.." line is uncommented!!
 #
-# Allow deploy user to restart services
+# Allow deploy user to execute these commands without password
 # %deploy ALL=NOPASSWD:/etc/init.d/tomcat7, /etc/init.d/nginx, /bin/fuser, /bin/rm, /bin/sh
 
 RAILO_VERSION="4.2.1.000"
