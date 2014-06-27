@@ -64,15 +64,22 @@
 		<!--- assert there are some tests --->
 		<cfset assert("tests.recordCount gt 0", "loc.testsFolder")>
 		<!--- check if there is corresponding test file --->
+		<cfset loc.testsExist = true>
+		<cfset loc.existingTestFiles = []>
+		<cfset loc.missingTestFiles = []>
+		<cfoutput>
 		<cfloop query="mvc">
 			<cfset loc.mvcFolder = Replace(loc.mvcFolder, "\", "/", "all")>
 			<cfset loc.directory = Replace(mvc.directory, "\", "/", "all")>
+			<cfset loc.folder = $$folder(loc.mvcFolder, loc.directory & "/")>
 			<!--- define this file's "skip key" --->
-			<cfset loc.skipKey = $$folder(loc.mvcFolder, loc.directory & "/") & mvc.name>
+			<cfset loc.skipKey = loc.folder & mvc.name>
 			<!--- also skip anything named Controller.cfc --->
-			<cfif 
-				ListFindNoCase(loc.skip, loc.skipKey) eq 0 
-				AND Compare(mvc.name, "Controller.cfc") neq 0
+			<cfif ListFindNoCase(loc.skip, loc.skipKey) gt 0>
+				skip this #loc.skipKey#<br>
+				<!--- do nothing.. i already know which files are being skipped --->
+			<cfelseif 
+				Compare(mvc.name, "Controller.cfc") neq 0
 				AND Compare(mvc.name, "Wheels.cfc") neq 0
 				AND Compare(mvc.name, "Model.cfc") neq 0
 			>
@@ -83,9 +90,19 @@
 					<cfset loc.testFileName = ListFirst(mvc.name, ".") & loc.testsSuffix>
 				</cfif>
 				<cfset loc.testFilePath = loc.testsFolder & $$folder(loc.mvcFolder, loc.directory & "/") & loc.testFileName>
-				<cfset assert("FileExists(loc.testFilePath)", "loc.mvcFilePath", "loc.testFilePath", "loc.skipKey")>
+				
+				<cfif ! FileExists(loc.testFilePath)>
+					<cfset ArrayAppend(loc.missingTestFiles, loc.folder & loc.testFileName)>
+					<cfset loc.testsExist = false>
+				<cfelse>
+					<cfset ArrayAppend(loc.existingTestFiles, loc.folder & loc.testFileName)>
+				</cfif>
 			</cfif>
 		</cfloop>
+		</cfoutput>
+		<cfset loc.missingTestFiles = ArrayToList(loc.missingTestFiles, ', ')>
+		<cfset loc.existingTestFiles = ArrayToList(loc.existingTestFiles, ', ')>
+		<cfset assert("loc.testsExist", "loc.missingTestFiles", "loc.existingTestFiles", "loc.skip")>
 	</cffunction>
 
 	<cffunction name="$$folder" access="private" output="false" hint="gets the folder name after the 'root'">
