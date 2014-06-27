@@ -44,7 +44,7 @@
 	** HELPERS **
 	 --->
 
-	<cffunction name="urlFor" access="public" hint="append a token to all urls.. seems the only way to prevent an odd caching issue">
+	<cffunction name="urlFor" access="public" output="false" hint="append a token to all urls.. seems the only way to prevent an odd caching issue">
 		<!--- ensure routes are used for all urls --->
 		<cfif ! StructKeyExists(arguments, "noroute")>
 			<cfif ! (StructKeyExists(arguments, "route") && Len(arguments.route) gt 0)>

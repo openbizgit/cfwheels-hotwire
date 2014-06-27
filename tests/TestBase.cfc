@@ -78,15 +78,18 @@
 	</cffunction>
 
 	<cffunction name="createRootSession" access="private">
-		<cfset createSession(1)>
+		<cfargument name="id" type="numeric" required="false" default="1">
+		<cfset createSession(argumentCollection=arguments)>
 	</cffunction>
 
 	<cffunction name="createAdministratorSession" access="private">
-		<cfset createSession(2)>
+		<cfargument name="id" type="numeric" required="false" default="2">
+		<cfset createSession(argumentCollection=arguments)>
 	</cffunction>
 
 	<cffunction name="createUserSession" access="private">
-		<cfset createSession(3)>
+		<cfargument name="id" type="numeric" required="false" default="3">
+		<cfset createSession(argumentCollection=arguments)>
 	</cffunction>
 
 	<cffunction name="createSession" access="private">
