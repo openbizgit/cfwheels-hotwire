@@ -91,9 +91,10 @@
 
 	<cffunction name="createSession" access="private">
 		<cfargument name="id" type="numeric" required="true">
+		<cfset var sessionPerson = model("Person").findByKey(arguments.id)>
 		<!--- TODO: defined a dedicated user for tests --->
-		<cfif ! isPresent() OR desecurify(cookie[constant('sessionCookieName')]) neq arguments.id>
-			<cfset var person = model("Person").findByKey(arguments.id)>
+		<cfif ! isPresent() OR cookie[constant('sessionCookieName')] neq sessionPerson.remembertoken>
+			<cfset var person = model("Person").findByKey(sessionPerson.key())>
 			<cfset arrive(person)>
 			<cfset cookie["cfid"] = CreateUUID()>
 		</cfif>

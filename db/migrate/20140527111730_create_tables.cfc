@@ -31,6 +31,7 @@
       t.string(columnNames="email", null=false, limit="128");
       t.string(columnNames="password", null=false, limit="250");
       t.string(columnNames="salt", null=false, limit="36");
+      t.string(columnNames="remembertoken", null=false, limit="64");
       t.string(columnNames="resettoken", null=true, limit="64");
       t.datetime(columnNames="tokencreatedat,tokenexpiresat,lastsigninat,lastsigninattemptat,confirmedat", null=true);
       t.string(columnNames="lastsigninattemptipaddress", null=true, limit="32");

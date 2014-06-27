@@ -17,7 +17,7 @@
 		<cfset validatesFormatOf(property="email", type="email", unless="this.email is ''") />
 		<cfset validatesUniquenessOf(property="email", unless="this.email is ''") />
 		<!--- callbacks --->
-		<cfset beforeValidation("$$massage,$$setSalt")>
+		<cfset beforeValidation("$$massage,$$setSalt,$$setRememberToken")>
 		<cfset beforeSave("$$securePassword")>
 		<cfset afterFind("$$setPropertiesAfterFind")>
 	</cffunction>
@@ -47,6 +47,12 @@
 	<cffunction name="$$setSalt" access="private">
 		<cfif ( StructKeyExists(this, "passwordConfirmation") )>
 			<cfset this.salt = bCrypt().genSalt() />
+		</cfif>
+	</cffunction>
+
+	<cffunction name="$$setRememberToken" access="private">
+		<cfif this.isNew() && ! this.propertyIsPresent("remembertoken")>
+			<cfset generateRememberToken()>
 		</cfif>
 	</cffunction>
 
@@ -94,22 +100,26 @@
 
 	<!--- Authenticates a user object. --->	
 	<cffunction name="authenticate">
-		<cfargument name="password" required="true" type="string" />
-		<cfreturn ! Compare(this.password, hashPassword(arguments.password, this.salt)) />
+		<cfargument name="password" required="true" type="string">
+		<cfreturn ! Compare(this.password, hashPassword(arguments.password, this.salt))>
 	</cffunction>
 
 	<!--- Generates an expiring security token for password resets. --->
 	<cffunction name="generateSecurityToken">
-		<cfset this.resetToken = CreateUUID()>
+		<cfset this.resetToken = generateToken()>
 		<cfset this.tokenCreatedAt = Now()>
 		<cfset this.tokenExpiresAt = DateAdd("h", 24, Now())>
 	</cffunction>
 
 	<!--- Generates a temporary password when users reset their password. --->
 	<cffunction name="generateTemporaryPassword">
-		<cfset this.password = CreateUUID()  & "!" />
-	</cffunction>	
+		<cfset this.password = generateToken()  & "!">
+	</cffunction>
 
+	<cffunction name="generateRememberToken">
+		<cfset this.remembertoken = Left(generateToken() & generateToken(), 64)>
+	</cffunction>
+	
 	<!---
 	** PRIVATE **
 	 --->
@@ -118,12 +128,6 @@
 	<cffunction name="hashPassword" access="private">
 		<cfargument name="password" required="true" type="string">
 		<cfargument name="salt" required="true" type="string">
-		<!--- <cfset var loc = {} /> --->
-		<!--- <cfset loc.password = loc.bCrypt.hashpw(arguments.password, arguments.salt)> --->
-		<!--- change the "to" attribute to something else --->
-		<!--- <cfloop from="1" to="666" index="loc.i">
-			<cfset loc.password = Hash(arguments.password & arguments.salt, "SHA-512")>
-		</cfloop> --->
 		<cfreturn bCrypt().hashpw(arguments.password, arguments.salt)>
 	</cffunction>
 
@@ -136,8 +140,6 @@
 	 --->
 
 	<cffunction name="_securePassword">
-		<!--- <cfargument name="password" type="string" required="true" />
-		<cfargument name="salt" type="string" required="true" /> --->
 		<cfreturn hashPassword(argumentCollection=arguments) />
 	</cffunction>
 

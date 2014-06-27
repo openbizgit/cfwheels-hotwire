@@ -5,17 +5,17 @@
 --->
 <cfcomponent extends="Wheels">
 	
-	<cffunction name="sanitiseDate" access="package">
+	<cffunction name="sanitiseDate" access="private">
 		<cfargument name="string" required="true" type="string" />
 		<cfreturn arguments.string IS "" ? "" : parseDate(arguments.string)>
 	</cffunction>
 	
-	<cffunction name="humaniseDate" access="package">
+	<cffunction name="humaniseDate" access="private">
 		<cfargument name="string" required="true" type="string" />
 		<cfreturn Left(arguments.string,1) IS "{" AND Right(arguments.string,1) IS "}" ? DateFormat(arguments.string,"dd/mm/yyyy") : "">
 	</cffunction>
 
-	<cffunction name="isPostedDate" access="package">
+	<cffunction name="isPostedDate" access="private">
 		<cfargument name="string" required="true" type="string" />
 		<!--- TODO: use regex to test format of string --->
 		<cfreturn ListLen(arguments.string, "/") eq 3>
