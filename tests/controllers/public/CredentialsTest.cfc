@@ -10,7 +10,7 @@ component extends="Tests.TestBase"
     {
         onstartup()
         super.setup()
-        loc.args = {controller="public.Signin", action="undefined", params={}}
+        loc.args = {controller="public.Credentials", action="undefined", params={}}
     }
 
     // teardown runs after every test

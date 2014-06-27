@@ -5,7 +5,7 @@ describe "the sign in process" do
   subject { page }
 
   describe "signin page" do
-    before { visit '/public/signin' }
+    before { visit 'public/sessions/new' }
 
     # page.current_path.should == '/public/signin'
     it { should have_selector("h3", text: "Sign in") }
@@ -13,7 +13,7 @@ describe "the sign in process" do
   end
 
   describe "signin" do
-    before { visit '/public/signin' }
+    before { visit 'public/sessions/new' }
 
     describe "with invalid email & password" do
       before {click_button "Sign in"}
@@ -47,5 +47,11 @@ describe "the sign in process" do
       end
 
     end
+
+    describe "link to forgotten password" do
+      before { click_link("Forgotten?") }
+      it { should have_selector("h2", text: "Password Reset") }
+    end
+
   end
 end

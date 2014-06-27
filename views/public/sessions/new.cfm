@@ -36,7 +36,7 @@
 				<input id="_dt" name="dt" placeholder="Empty" type="text" value="" />
 			</div>					    
 		    <button class="btn btn-lg btn-primary btn-block" type="submit", id="submit">Sign in</button>
-		    #linkTo(route="publicPasswordsNew", text="Forgotten?", class="btn")# <br><br>
+		    #linkTo(route="publicCredentialsNew", text="Forgotten?", class="btn")# <br><br>
       	#endFormTag()#
 
       	<cfif get("stage") eq "development" && IsDefined("people")>

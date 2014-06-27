@@ -35,7 +35,7 @@ component extends="Tests.TestBase"
         assert('loc.response contains "password"')
         assert('loc.response contains "/images/logo.png"')
         // forgotten link
-        loc.forgottenRoute = 'public/passwords/new'
+        loc.forgottenRoute = 'public/credentials/new'
         assert('loc.response contains loc.forgottenRoute')
         // signin button
         loc.submit = '<button class="btn btn-lg btn-primary btn-block" type="submit"'

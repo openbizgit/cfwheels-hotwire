@@ -12,7 +12,7 @@
 	<cffunction name="new" hint="Renders the password reset page. If an email address is passed, looks it up and sends an email confirmation email">
 		<cfif ( StructKeyExists(params, "email") )>
 			<cfif len(params.email) EQ 0>
-				<cfset flashInsert(message="Please enter your e-mail address.", messageType="info") />
+				<cfset flashInsert(message="Please enter your email address.", messageType="warning") />
 			<cfelse>
 				<cfset var person = model("Person").findOneByEmail(params.email) />	
 				<cfif ( IsObject(person) )>
@@ -38,7 +38,7 @@
 						) />
 					</cfif>
 				</cfif>
-				<cfset flashInsert(message="Please check your e-mail for reset instructions.", messageType="success") />
+				<cfset flashInsert(message="Please check your email for reset instructions.", messageType="success") />
 			</cfif>
 		</cfif>
 	</cffunction>

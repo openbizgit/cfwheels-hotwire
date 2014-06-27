@@ -3,7 +3,7 @@
 	#pageTitle(title="Password Reset", show=false)#
 
   <div class="container">
-    	#startFormTag(route="publicPasswordsNew", class="form-signin", style="max-width: 550px;")#
+    	#startFormTag(route="publicCredentialsNew", class="form-signin", style="max-width: 550px;")#
         <div style="text-align:center;"><a href="/"><img src="/images/logo.png" width="100" /></a></div>
         #flashMessageTag()#
         #errorMessageTag()#
@@ -15,7 +15,7 @@
 
         <div class="pull-right">
           #linkTo(text="Cancel", route="signin", class="btn btn-default")#
-    	    <button class="btn btn-primary" type="submit">Send E-mail</button>
+    	    <button class="btn btn-primary" type="submit">Send Email</button>
         </div>
     	#endFormTag()#
   </div>	
