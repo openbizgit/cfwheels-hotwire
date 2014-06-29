@@ -123,10 +123,6 @@
 	</cfif>
 </cffunction>
 
-<cffunction name="generateToken" output="false" hint="Generates a random token">
-	<cfreturn Replace(LCase(CreateUUID()), "-", "", "all")>
-</cffunction>
-
 <cffunction name="titleise" access="public" output="No" displayname="Titleise" description="I capitalise the first letter of each word">
 	<cfargument name="input" type="string" required="yes" />
 	<cfscript>
@@ -278,6 +274,43 @@
 		<cfset loc.removeLast = ListDeleteAt(loc.notStreetName, ListLen(loc.notStreetName, loc.streetNumberDelims), loc.streetNumberDelims)>
 		<cfset loc.return.subnumber = loc.removeLast>
 	</cfif>
+	<cfreturn loc.return>
+</cffunction>
+
+<cffunction name="randomString" returntype="string" output="false">
+	<cfargument name="type" type="string" required="false" default="alphanumeric" hint="[numeric|alpha|alphanumeric|secure|urlsafe]" />
+	<cfargument name="length" type="numeric" required="false" default="32">
+	<cfargument name="mixedCase" type="boolean" required="false" default="false">
+	<cfset var loc = {}>
+	<cfset loc.return = "">
+	<!--- define the characters available --->
+	<cfset loc.numbers = "0,1,2,3,4,5,6,7,8,9">
+	<cfset loc.letters = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z">
+	<cfif arguments.mixedCase>
+		<cfset loc.letters = ListAppend(loc.letters, UCase(loc.letters))>
+	</cfif>
+	<cfset loc.symbols = "!,@,$,%,*,-,_,=,+,?,~">
+
+	<!--- build a list of available characters --->
+	<cfif arguments.type eq "numeric">
+		<cfset loc.source = loc.numbers>
+	<cfelseif arguments.type eq "alpha">
+		<cfset loc.source = loc.letters>
+	<cfelseif arguments.type eq "alphanumeric">
+		<cfset loc.source = "#loc.letters#,#loc.numbers#">
+	<cfelseif arguments.type eq "secure">
+		<cfset loc.source = "#loc.letters#,#loc.numbers#,#loc.symbols#">
+	<cfelseif arguments.type eq "urlsafe">
+		<cfset loc.source = "#loc.letters#,#loc.numbers#,_,-">
+	<cfelse>
+		<cfthrow message="invalid type argument (#arguments.type#)">
+	</cfif>
+	<cfset loc.source = ListToArray(loc.source)>
+
+	<!--- build the string to the required length --->
+	<cfloop from="1" to="#arguments.length#" index="loc.i">
+		<cfset loc.return = loc.return & loc.source[RandRange(1, loc.source.Len())]>
+	</cfloop>
 	<cfreturn loc.return>
 </cffunction>
 

@@ -54,7 +54,7 @@
 		<cfif ! StructKeyExists(arguments, "params")>
 			<cfset arguments.params = "">
 		</cfif>
-		<cfset arguments.params = ListAppend(arguments.params, generateToken(), "&")>
+		<cfset arguments.params = ListAppend(arguments.params, randomString("urlsafe", 32), "&")>
 		<cfreturn core.urlFor(argumentCollection=arguments)>
 	</cffunction>
 

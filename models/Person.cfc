@@ -106,18 +106,18 @@
 
 	<!--- Generates an expiring security token for password resets. --->
 	<cffunction name="generateSecurityToken">
-		<cfset this.resetToken = generateToken()>
+		<cfset this.resetToken = randomString("urlsafe", 64)>
 		<cfset this.tokenCreatedAt = Now()>
 		<cfset this.tokenExpiresAt = DateAdd("h", 24, Now())>
 	</cffunction>
 
 	<!--- Generates a temporary password when users reset their password. --->
 	<cffunction name="generateTemporaryPassword">
-		<cfset this.password = generateToken()  & "!">
+		<cfset this.password = randomString("secure", 128) & "!">
 	</cffunction>
 
 	<cffunction name="generateRememberToken">
-		<cfset this.remembertoken = Left(generateToken() & generateToken(), 64)>
+		<cfset this.remembertoken = randomString("urlsafe", 64)>
 	</cffunction>
 	
 	<!---
