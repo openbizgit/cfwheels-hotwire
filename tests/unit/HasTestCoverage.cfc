@@ -49,7 +49,7 @@
 				<cfset loc.testsFolder = ExpandPath("tests/views/")>
 				<cfset loc.testsFilter = "*.rb">
 				<cfset loc.testsSuffix = "_spec.rb">
-				<cfset loc.skip = "tools/Junify.cfc,seed/Seed.cfc">
+				<cfset loc.skip = "tools/Junify.cfc,seed/Seed.cfc,joint/Detour.cfc,tools/Checks.cfc,tools/DB.cfc">
 			</cfcase>
 		</cfswitch>
 
@@ -76,7 +76,6 @@
 			<cfset loc.skipKey = loc.folder & mvc.name>
 			<!--- also skip anything named Controller.cfc --->
 			<cfif ListFindNoCase(loc.skip, loc.skipKey) gt 0>
-				skip this #loc.skipKey#<br>
 				<!--- do nothing.. i already know which files are being skipped --->
 			<cfelseif 
 				Compare(mvc.name, "Controller.cfc") neq 0
