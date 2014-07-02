@@ -1,11 +1,9 @@
-<!--- Creates a cookie for an authenticated person object. --->
-<cffunction name="arrive" output="false">
+<cffunction name="makeSession" output="false" hint="Creates a cookie for an authenticated person object">
 	<cfargument name="person" required="true" type="any">
 	<cfcookie name="#constant('sessionCookieName')#" value="#arguments.person.remembertoken#" expires="never">
 </cffunction>
 
-<!--- Destroys current cookies. --->
-<cffunction name="depart" output="false">
+<cffunction name="destroySession" output="false" hint="Destroys current cookies">
 	<cfif isPresent()>
 		<cfloop collection="#cookie#" item="i">
 			<cfset StructDelete(cookie, i)>
@@ -13,12 +11,11 @@
 	</cfif>
 </cffunction>
 
-<!--- Checks if a person is logged in --->
-<cffunction name="isPresent" output="false">
+<cffunction name="isPresent" output="false" hint="Checks if a person is logged in">
 	<cfreturn StructKeyExists(cookie, constant("sessionCookieName")) && IsObject(getPresentPerson())>
 </cffunction>
 
-<cffunction name="getRememberToken">
+<cffunction name="getRememberToken" output="false" hint="returns the session cookie value">
 	<cfreturn cookie[constant("sessionCookieName")]>
 </cffunction>
 

@@ -98,7 +98,7 @@
 		<!--- TODO: defined a dedicated user for tests --->
 		<cfif ! isPresent() OR cookie[constant('sessionCookieName')] neq sessionPerson.remembertoken>
 			<cfset var person = model("Person").findByKey(sessionPerson.key())>
-			<cfset arrive(person)>
+			<cfset makeSession(person)>
 			<cfset cookie["cfid"] = CreateUUID()>
 		</cfif>
 	</cffunction>
@@ -106,7 +106,7 @@
 	<cffunction name="killSession" access="private">
 		<!--- kill the unti test session --->
 		<!--- 
-		<cfset depart()>
+		<cfset destroySession()>
 		 --->
 		<!--- re-create the original session --->
 		<!--- 

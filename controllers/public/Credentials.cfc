@@ -93,7 +93,7 @@
 		<!--- Verify that the users updates successfully --->
 		<cfif person.update(params.person)>
 			<cfset flashInsert(message="Your password was updated successfully.", messageType="success") />
-			<cfset arrive(person) />	
+			<cfset makeSession(person) />	
 			<cfreturn redirectTo(route="jointDetourRoot")>			
 		<!--- Otherwise --->
 		<cfelse>

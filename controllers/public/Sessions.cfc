@@ -22,7 +22,7 @@
 	
 	<cffunction name="new" hint="The sign in form">
 		<cfset people = model("Person").findAll()><!--- remove this line during development --->
-		<cfset depart() />
+		<cfset destroySession() />
 	</cffunction>
 	
 	<cffunction name="create" hint="Sign in a user">
@@ -40,7 +40,7 @@
 
 			<cfset person.update(lastSigninAt=Now(), lastSigninAttemptAt=Now(), lastSigninAttemptIPAddress=CGI.REMOTE_ADDR, utcoffset=utcoffset)>
 
-			<cfset arrive(person) />
+			<cfset makeSession(person) />
 			<cfset flashInsert(message="Hi #person.firstname#, welcome to #get("appName")#", messageType="success") />
 			<cfreturn redirectTo(route="jointDetourRoot")>
 		</cfif>		
@@ -49,7 +49,7 @@
 	<cffunction name="delete" hint="Sign out a user">
 		<cfif isPresent()>
 			<cfset model("Person").updateOne(where="remembertoken = '#getRememberToken()#'", remembertoken=randomString("secure", 64, true))>
-			<cfset depart()>
+			<cfset destroySession()>
 		</cfif>
 		<cfset flashInsert(message="You have been signed out", messageType="info") />
 		<cfreturn redirectTo(route="publicSessionsNew")>
