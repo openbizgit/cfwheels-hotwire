@@ -10,7 +10,7 @@
 	** FILTERS **
 	 --->
 	 
-	<cffunction name="verifysigninParams" access="private" hint="Intercepts requests without valid params">
+	<cffunction name="verifySigninParams" access="private" hint="Intercepts requests without valid params">
 		<cfif ( (! StructKeyExists(params, "email") || ! Len(params.email) gt 0) || (! StructKeyExists(params, "password") || ! Len(params.password) gt 0) ) >
 			<cfset failedSignin() />
 		</cfif>
@@ -47,7 +47,10 @@
 	</cffunction>
 	
 	<cffunction name="delete" hint="Sign out a user">
-		<cfset depart() />
+		<cfif isPresent()>
+			<cfset model("Person").updateOne(where="remembertoken = '#getRememberToken()#'", remembertoken=randomString("secure", 64, true))>
+			<cfset depart()>
+		</cfif>
 		<cfset flashInsert(message="You have been signed out", messageType="info") />
 		<cfreturn redirectTo(route="publicSessionsNew")>
 	</cffunction>

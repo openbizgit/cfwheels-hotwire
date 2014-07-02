@@ -15,13 +15,17 @@
 
 <!--- Checks if a person is logged in --->
 <cffunction name="isPresent" output="false">
-	<cfreturn StructKeyExists(cookie, constant("sessionCookieName"))>
+	<cfreturn StructKeyExists(cookie, constant("sessionCookieName")) && IsObject(getPresentPerson())>
+</cffunction>
+
+<cffunction name="getRememberToken">
+	<cfreturn cookie[constant("sessionCookieName")]>
 </cffunction>
 
 <cffunction name="getPresentPerson" output="false" hint="this differs from getCurrentPerson in that it is available globally">
 	<cfargument name="base" type="boolean" required="false" default="false" hint="when impersonation is in effect, return the base person">
 	<cfset var loc = {}>
-	<cfset loc.person = model("Person").findOne(where="remembertoken = '#cookie[constant('sessionCookieName')]#' AND confirmedat IS NOT NULL")>
+	<cfset loc.person = model("Person").findOne(where="remembertoken = '#getRememberToken()#' AND confirmedat IS NOT NULL")>
 
 	<cfif ! IsObject(loc.person)>
 		<cfreturn false>
