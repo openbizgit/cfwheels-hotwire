@@ -48,7 +48,7 @@
 		<cfset loc.th = "st">
 	<cfelseif ListFind("2,22", loc.day) gt 0>
 		<cfset loc.th = "nd">
-	<cfelseif ListFind("4,24", loc.day) gt 0>
+	<cfelseif ListFind("3,23", loc.day) gt 0>
 		<cfset loc.th = "rd">
 	</cfif>
 	<cfset loc.return = DateFormat(arguments.date, "ddd, d") & loc.th & DateFormat(arguments.date, " mmm yyyy")>
