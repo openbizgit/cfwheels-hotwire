@@ -61,10 +61,15 @@
 
 <cffunction name="hyphenify" access="public" output="false" returntype="string" hint="hyphenates a string for SES/slug purposes">
 	<cfargument name="string" type="string" required="true">
+	<cfargument name="ignore" type="string" required="false" default="">
 	<cfset var loc = {string=arguments.string} />
 	<cfset loc.string = LCase(loc.string)>
 	<cfset loc.string = ReReplace(loc.string,"[ /]","-","all")>
-	<cfset loc.string = ReReplace(loc.string,"[^a-z0-9-]","","all")>
+	<cfset loc.string = ReReplace(loc.string,"[^a-z0-9-#arguments.ignore#]","","all")>
+	<!--- strip any double hyphens --->
+	<cfloop condition="#Find("--", loc.string) gt 0#">
+		<cfset loc.string = Replace(loc.string,"--","-","all")>
+	</cfloop>
 	<cfreturn loc.string>
 </cffunction>
 
